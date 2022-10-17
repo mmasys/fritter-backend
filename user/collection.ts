@@ -43,7 +43,7 @@ class UserCollection {
    * @return {Promise<HydratedDocument<User>> | Promise<null>} - The user with the given username, if any
    */
   static async findOneByUsername(username: string): Promise<HydratedDocument<User>> {
-    return UserModel.findOne({username: new RegExp(`^${username.trim()}$`, 'i')});
+    return UserModel.findOne({username: new RegExp(`^${username?.trim()}$`, 'i')});
   }
 
   /**
@@ -55,7 +55,7 @@ class UserCollection {
    */
   static async findOneByUsernameAndPassword(username: string, password: string): Promise<HydratedDocument<User>> {
     return UserModel.findOne({
-      username: new RegExp(`^${username.trim()}$`, 'i'),
+      username: new RegExp(`^${username?.trim()}$`, 'i'),
       password
     });
   }

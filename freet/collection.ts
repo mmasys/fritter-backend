@@ -25,7 +25,8 @@ class FreetCollection {
       authorId,
       dateCreated: date,
       content,
-      dateModified: date
+      dateModified: date,
+      likes: 0
     });
     await freet.save(); // Saves freet to MongoDB
     return freet.populate('authorId');
@@ -95,6 +96,21 @@ class FreetCollection {
    */
   static async deleteMany(authorId: Types.ObjectId | string): Promise<void> {
     await FreetModel.deleteMany({authorId});
+  }
+
+  /**
+   * Update freet likes
+   *
+   * @param freetId id of the freet
+   * @param change 1 or -1
+   */
+  static async changeLikes(
+    freetId: Types.ObjectId | string,
+    change: 1 | -1
+  ): Promise<void> {
+    const freet = await FreetModel.findById(freetId);
+    freet.likes += change;
+    await freet.save();
   }
 }
 

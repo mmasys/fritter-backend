@@ -313,3 +313,24 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+
+## Newly Added API routes
+
+#### `GET /api/freets/mostPopular` - Get the most liked freets
+
+**Returns**
+
+- An array of the most popular freets sorted in descending order by the number of likes
+
+#### `GET /api/freets/mostCredible` - Get the most credible freets
+
+**Returns**
+
+- An array of the most credible freets sorted in descending order by the number of approvals
+
+#### `GET /api/freets/following/user=USERNAME` - Get the user's following freets
+
+**Returns**
+
+- An array of the freets posted by the accounts that this specific user is following
