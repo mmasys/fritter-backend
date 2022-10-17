@@ -333,4 +333,191 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Returns**
 
-- An array of the freets posted by the accounts that this specific user is following
+- An array of the freets posted by the accounts that the user with username `user` is following
+
+**Throws**
+
+- `400` if `user` is not given
+- `404` if `user` is not a recognized username of any user
+
+#### `GET /api/freets/user=USERNAME/liked` - Get user's liked freets
+
+**Returns**
+
+- An array of freets liked by the user with username `user`
+
+**Throws**
+
+- `400` if `user` is not given
+- `404` if `user` is not a recognized username of any user
+
+#### `GET /api/freets/user=USERNAME/drafts` - Get user's draft freets
+
+**Returns**
+
+- An array of freets drafted by the user with username `user`
+
+**Throws**
+
+- `400` if `user` is not given
+- `404` if `user` is not a recognized username of any user
+
+#### `POST /api/freets/drafts` - Add a new draft to a user's list of drafts
+
+**Body**
+
+- `freetId` *{string}* - the id of the freet to be added to drafts
+
+**Returns**
+
+- The newly updated drafts list
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist or it has already been added to drafts
+- `403` if the user is not logged in
+
+#### `DELETE /api/freets/drafts?freetID=FREETID` - Remove a draft from a user's list of drafts
+
+**Returns**
+
+- A success message, along with the newly updated drafts list
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist within the drafts list
+- `403` if the user is not logged in
+
+#### `POST /api/approvals` - Add a new approval to a freet
+
+**Body**
+
+- `freetId` *{string}* - the id of the freet to approve
+
+**Returns**
+
+- The newly added approval
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist or it has already been approved by the user
+- `403` if the user is not logged in
+
+#### `DELETE /api/approvals/freetId=FREETID` - Remove an approval from a freet
+
+**Returns**
+
+- A success message once the approval has been removed
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist
+- `403` if the user is not logged in
+
+#### `POST /api/disprovals` - Add a new disproval to a freet
+
+**Body**
+
+- `freetId` *{string}* - the id of the freet to disprove
+
+**Returns**
+
+- The newly added disproval
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist or it has already been disproved by the user
+- `403` if the user is not logged in
+
+#### `DELETE /api/disprovals/freetId=FREETID` - Remove a disproval from a freet
+
+**Returns**
+
+- A success message once the disproval has been removed
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist
+- `403` if the user is not logged in
+
+#### `POST /api/approvals/links` - Add a new approval link to a freet
+
+**Body**
+
+- `freetId` *{string}* - the id of the freet to add the approval link to
+
+**Returns**
+
+- The newly added link
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist or that user has already added that particular link
+- `403` if the user is not logged in
+
+#### `POST /api/disprovals/links` - Add a new disproval link to a freet
+
+**Body**
+
+- `freetId` *{string}* - the id of the freet to add the disproval link to
+
+**Returns**
+
+- The newly added link
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist or that user has already added that particular link
+- `403` if the user is not logged in
+
+#### `POST /api/likes` - Add a new like
+
+**Body**
+
+- `freetId` *{string}* - the id of the freet to like
+
+**Returns**
+
+- The newly added like
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist or it has already been liked
+- `403` if the user is not logged in
+
+#### `DELETE /api/likes/freetId=FREETID` - Remove a like from a freet
+
+**Returns**
+
+- A success message once the like has been removed
+
+**Throws**
+
+- `404` if the freet with `freetId` does not exist
+- `403` if the user is not logged in
+
+#### `POST /api/followers` - Follow another user
+
+**Body**
+
+- `followeeId` *{string}* - the id of the followee
+
+**Returns**
+
+- The newly created follower entry
+
+**Throws**
+
+- `404` if the user already follows that user
+- `403` if the user is not logged in
+
+#### `DELETE /api/followers?followeeId=FOLLOWEEID` - Unfollow a user
+
+**Returns**
+
+- A success message once the user has been unfollowed
+
+**Throws**
+
+- `404` if the user does not follow that user
+- `403` if the user is not logged in
