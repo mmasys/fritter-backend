@@ -1,4 +1,4 @@
-import type {Types, PopulatedDoc, Document} from 'mongoose';
+import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
 
@@ -15,6 +15,14 @@ export type Freet = {
   content: string;
   dateModified: Date;
   likes: number;
+  approves: number;
+  disproves: number;
+  approveLinks: Map<string, number>;
+  disproveLinks: Map<string, number>;
+  approvers: Map<Types.ObjectId | string, string[]>;
+  disprovers: Map<Types.ObjectId | string, string[]>;
+  uniqueUserApproveLinks: Map<string, string>;
+  uniqueUserDisproveLinks: Map<string, string>;
 };
 
 export type PopulatedFreet = {
@@ -24,6 +32,14 @@ export type PopulatedFreet = {
   content: string;
   dateModified: Date;
   likes: number;
+  approves: number;
+  disproves: number;
+  approveLinks: Map<string, number>;
+  disproveLinks: Map<string, number>;
+  approvers: Map<Types.ObjectId | string, string[]>;
+  disprovers: Map<Types.ObjectId | string, string[]>;
+  uniqueUserApproveLinks: Map<string, string>;
+  uniqueUserDisproveLinks: Map<string, string>;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -55,6 +71,54 @@ const FreetSchema = new Schema<Freet>({
   // The number of likes on the freet
   likes: {
     type: Number,
+    required: true
+  },
+  // The number of approves on the freet
+  approves: {
+    type: Number,
+    required: true
+  },
+  // The number of disproves on the freet
+  disproves: {
+    type: Number,
+    required: true
+  },
+  // The approval links provided by users on a freet
+  // mapped to their number of occurrences
+  approveLinks: {
+    type: Map,
+    of: Number,
+    required: true
+  },
+  // The disproval links provided by users on a freet
+  // mapped to their number of occurences
+  disproveLinks: {
+    type: Map,
+    of: Number,
+    required: true
+  },
+  // A map of users to a list of the unique approve links they have added to a freet
+  approvers: {
+    type: Map,
+    of: [String],
+    required: true
+  },
+  // A map of users to a list of the unique disprove links they have added to a freet
+  disprovers: {
+    type: Map,
+    of: [String],
+    required: true
+  },
+  // A map of approve uniqueIds (link + userId) to corresponding links
+  uniqueUserApproveLinks: {
+    type: Map,
+    of: [String],
+    required: true
+  },
+  // A list of disprove uniqueIds (link + userId) to corresponding links
+  uniqueUserDisproveLinks: {
+    type: Map,
+    of: [String],
     required: true
   }
 });

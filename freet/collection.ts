@@ -26,7 +26,15 @@ class FreetCollection {
       dateCreated: date,
       content,
       dateModified: date,
-      likes: 0
+      likes: 0,
+      approves: 0,
+      disproves: 0,
+      approveLinks: {},
+      disproveLinks: {},
+      approvers: {},
+      disprovers: {},
+      uniqueUserApproveLinks: [],
+      uniqueUserDisproveLinks: []
     });
     await freet.save(); // Saves freet to MongoDB
     return freet.populate('authorId');
@@ -99,17 +107,147 @@ class FreetCollection {
   }
 
   /**
-   * Update freet likes
+   * Update the number of likes on a freet
    *
    * @param freetId id of the freet
-   * @param change 1 or -1
+   * @param change 1 or -1, either increment or decrement the like count
    */
-  static async changeLikes(
+  static async updateLikes(
     freetId: Types.ObjectId | string,
     change: 1 | -1
   ): Promise<void> {
     const freet = await FreetModel.findById(freetId);
     freet.likes += change;
+    await freet.save();
+  }
+
+  /**
+   * Update the number of approves or disproves on a freet
+   *
+   * @param userId id of the user
+   * @param freetId id of the freet
+   * @param change 1 or -1, either increment or decrement the approve count
+   * @param isApprove true if approve, false if disprove
+   */
+  static async updateApprovesOrDisproves(
+    userId: Types.ObjectId,
+    freetId: Types.ObjectId | string,
+    change: 1 | -1,
+    isApprove: boolean
+  ): Promise<void> {
+    const freet = await FreetModel.findById(freetId);
+
+    if (isApprove) {
+      freet.approves += change;
+      if (change === 1) {
+        freet.approvers.set(userId, []);
+      } else {
+        freet.approveLinks.forEach((count, link) => {
+          if (freet.approvers.get(userId).includes(link)) {
+            if (count === 0) {
+              freet.approveLinks.delete(link);
+            } else {
+              count -= 1;
+            }
+          }
+        });
+
+        freet.uniqueUserApproveLinks.forEach((uniqueId, link) => {
+          if (freet.approvers.get(userId).includes(link)) {
+            freet.uniqueUserApproveLinks.delete(uniqueId);
+          }
+        });
+        freet.approvers.delete(userId);
+      }
+    } else {
+      freet.disproves += change;
+      if (change === 1) {
+        freet.disprovers.set(userId, []);
+      } else {
+        freet.disproveLinks.forEach((count, link) => {
+          if (freet.disprovers.get(userId).includes(link)) {
+            if (count === 0) {
+              freet.disproveLinks.delete(link);
+            } else {
+              count -= 1;
+            }
+          }
+        });
+        freet.disprovers.delete(userId);
+      }
+    }
+
+    await freet.save();
+  }
+
+  /**
+   * Add an Approve or Disprove Link to a freet
+   *
+   * @param userId id of the freet approver/disprover
+   * @param freetId id of the freet
+   * @param link the link url
+   * @param isApprove true if approve, false if disprove
+   */
+  static async addLink(
+    userId: Types.ObjectId | string,
+    freetId: Types.ObjectId | string,
+    link: string,
+    isApprove: boolean
+  ): Promise<void> {
+    const freet = await FreetModel.findById(freetId);
+    const uniqueId = link + userId.toString();
+    const uniqueLinks = isApprove ? freet.uniqueUserApproveLinks : freet.uniqueUserDisproveLinks;
+    const userLinkCount = isApprove ? freet.approvers : freet.disprovers;
+    const totalLinkCount = isApprove ? freet.approveLinks : freet.disproveLinks;
+    uniqueLinks.set(uniqueId, link);
+
+    userLinkCount.set(userId, userLinkCount.get(userId).concat([link]));
+
+    if (totalLinkCount.has(link)) {
+      totalLinkCount.set(link, totalLinkCount.get(link) + 1);
+    } else {
+      totalLinkCount.set(link, 1);
+    }
+
+    await freet.save();
+  }
+
+  /**
+   * Remove an Approve or Disprove Link from a freet
+   *
+   * @param userId id of the freet approver/disprover
+   * @param freetId id of the freet
+   * @param link the link url
+   * @param isApprove true if approve, false if disprove
+   */
+  static async removeLink(
+    userId: Types.ObjectId,
+    freetId: Types.ObjectId | string,
+    link: string,
+    isApprove: boolean
+  ): Promise<void> {
+    const freet = await FreetModel.findById(freetId);
+    const uniqueId = link + userId.toString();
+    const uniqueLinks = isApprove ? freet.uniqueUserApproveLinks : freet.uniqueUserDisproveLinks;
+    const userLinkCount = isApprove ? freet.approvers : freet.disprovers;
+    const totalLinkCount = isApprove ? freet.approveLinks : freet.disproveLinks;
+
+    if (isApprove) {
+      freet.uniqueUserApproveLinks.delete(uniqueId);
+    } else {
+      freet.uniqueUserDisproveLinks.delete(uniqueId);
+    }
+
+    const newUserIdLinkCount = userLinkCount.get(userId).filter(l => l !== link);
+
+    userLinkCount.set(userId, newUserIdLinkCount);
+
+    if (totalLinkCount.get(link) === 1) {
+      totalLinkCount.delete(link);
+    } else {
+      totalLinkCount.set(link, totalLinkCount.get(link) - 1);
+    }
+
     await freet.save();
   }
 }

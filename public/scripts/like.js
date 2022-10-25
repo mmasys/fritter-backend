@@ -16,8 +16,8 @@ function removeLike(fields) {
     .catch(showResponse);
 }
 
-function viewLikesByFreetId(fields) {
-  fetch(`/api/likes?parentId=${fields.parentId}`)
+function findLikedFreets(fields) {
+  fetch(`/api/likes?userId=${fields.userId}`)
     .then(showResponse)
     .catch(showResponse);
 }

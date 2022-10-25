@@ -3,20 +3,20 @@ import {Schema, model} from 'mongoose';
 import type {User} from '../user/model';
 import type {Freet} from 'freet/model';
 
-export type Like = {
+export type Approve = {
   _id: Types.ObjectId;
-  likerId: Types.ObjectId;
+  approverId: Types.ObjectId;
   freetId: Types.ObjectId;
 };
 
-export type PopulatedLike = {
+export type PopulatedApprove = {
   _id: Types.ObjectId;
-  likerId: User;
+  approverId: User;
   freetId: Freet;
 };
 
-const LikeSchema = new Schema({
-  likerId: {
+const ApproveSchema = new Schema({
+  approverId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'User'
@@ -28,5 +28,5 @@ const LikeSchema = new Schema({
   }
 });
 
-const LikeModel = model<Like>('Like', LikeSchema);
-export default LikeModel;
+const ApproveModel = model<Approve>('Approve', ApproveSchema);
+export default ApproveModel;

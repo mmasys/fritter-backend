@@ -10,6 +10,8 @@ type FreetResponse = {
   content: string;
   dateModified: string;
   likes: number;
+  approves: number;
+  disproves: number;
 };
 
 /**

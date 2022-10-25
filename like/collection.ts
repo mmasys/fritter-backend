@@ -1,75 +1,80 @@
-import FreetCollection from 'freet/collection';
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Like} from './model';
+import FreetModel from '../freet/model';
 import LikeModel from './model';
+import FreetCollection from '../freet/collection';
 
 class LikeCollection {
   /**
   * Add a Like to the collection
   *
-  * @param {string} userId - The id of the user
+  * @param {string} likerId - The id of the freet liker
   * @param {string} freetId - The id of the freet
-  * @return {Promise<HydratedDocument<Like>>} - The newly created Like
+  * @return {Promise<HydratedDocument<Freet>>} - The newly created Freet
   */
   static async addOne(
-    userId: Types.ObjectId | string,
+    likerId: Types.ObjectId | string,
     freetId: Types.ObjectId | string
   ): Promise<HydratedDocument<Like>> {
-    const Like = new LikeModel({
-      userId,
+    const like = new LikeModel({
+      likerId,
       freetId
     });
-    await FreetCollection.changeLikes(freetId, 1);
-    await Like.save();
-    return Like.populate('userId');
+    await FreetCollection.updateLikes(freetId, 1);
+    await like.save();
+    return like.populate(['likerId', 'freetId']);
   }
 
   /**
-  * Delete a Like by id
+  * Remove a Like from the collection
   *
-  * @param {string} userId - The id of user
+  * @param {string} likerId - The id of the freet liker
   * @param {string} freetId - The id of the freet
-  * @return {Promise<Boolean>} - true if the Like has been deleted, false otherwise
+  * @return {Promise<boolean>} - true if the like has been deleted, false otherwise
   */
   static async deleteOne(
-    userId: Types.ObjectId | string,
+    likerId: Types.ObjectId | string,
     freetId: Types.ObjectId | string
   ): Promise<boolean> {
-    const deletedLike = await LikeModel.findOneAndDelete({
-      userId,
+    const deletedLike = await LikeModel.deleteOne({
+      likerId,
       freetId
     });
-    if (deletedLike !== null) {
-      await FreetCollection.changeLikes(freetId, -1);
+    if (deletedLike) {
+      await FreetCollection.updateLikes(freetId, -1);
     }
 
     return deletedLike !== null;
   }
 
   /**
-   * Delete entries for user
+   * Get a like by freetId and userId
    *
+   * @param {string} likerId - The id of the freet liker
    * @param {string} freetId - The id of the freet
-   * @returns true if success else false
+   * @return {Promise<boolesn>} - true if the user has liked the freet, false otherwise
    */
-  static async deleteMany(freetId: Types.ObjectId | string): Promise<boolean> {
-    const deleted = await LikeModel.deleteMany({freetId});
-    return deleted !== null;
+  static async findLike(
+    likerId: Types.ObjectId | string,
+    freetId: Types.ObjectId | string
+  ): Promise<boolean> {
+    const like = await LikeModel.findOne({likerId, freetId});
+    const freet = await FreetModel.findOne({_id: freetId});
+    if (freet && like) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
-   * Determine if a user has liked an item
+   * Get all freets that a user has liked
    *
    * @param {string} userId - The id of the user
-   * @param {string} freetId - The id of the freet
-   *
-   * @return {Promise<boolean>}
+   * @return {Promise<Array<HydratedDocument<Like>>>} - An array of all of the user's liked freets
    */
-  static async findByUserId(
-    userId: Types.ObjectId | string,
-    freetId: Types.ObjectId | string
-  ): Promise<boolean> {
-    return (await LikeModel.findOne({userId, freetId})) !== null;
+  static async findUserLikedFreets(userId: Types.ObjectId | string): Promise<Array<HydratedDocument<Like>>> {
+    return LikeModel.find({likerId: userId}).populate('freetId likerId');
   }
 }
 
