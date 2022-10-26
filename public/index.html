@@ -10,6 +10,7 @@
   <script src="./scripts/like.js"></script>
   <script src="./scripts/approve.js"></script>
   <script src="./scripts/disprove.js"></script>
+  <script src="./scripts/follow.js"></script>
   <script src="./scripts/index.js"></script>
 </head>
 
@@ -234,6 +235,51 @@
             <textarea id="link" name="link"></textarea>
           </div>
           <input type="submit" value="Remove DisproveLink">
+        </form>
+
+        <form id="add-follow">
+          <h3>Follow User</h3>
+          <div>
+            <label for="id">Username of User to Follow:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Follow User">
+        </form>
+
+        <form id="remove-follow">
+          <h3>Unfollow User</h3>
+          <div>
+            <label for="id">Username of User to Unfollow:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Unfollow User">
+        </form>
+
+        <form id="get-followers">
+          <h3>Show User's Followers</h3>
+          <div>
+            <label for="id">User ID:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Get User Followers">
+        </form>
+
+        <form id="get-following">
+          <h3>Show User's Following</h3>
+          <div>
+            <label for="id">User ID:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Get User Following">
+        </form>
+
+        <form id="get-following-feed">
+          <h3>Show User's Following Feed</h3>
+          <div>
+            <label for="id">User ID:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Get User Following Feed">
         </form>
       </div>
     </section>

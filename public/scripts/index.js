@@ -51,7 +51,12 @@ const formsAndHandlers = {
   'add-approve-link': addApproveLink,
   'remove-approve-link': removeApproveLink,
   'add-disprove-link': addDisproveLink,
-  'remove-disprove-link': removeDisproveLink
+  'remove-disprove-link': removeDisproveLink,
+  'add-follow': addFollow,
+  'remove-follow': removeFollow,
+  'get-followers': getFollowers,
+  'get-following': getFollowing,
+  'get-following-feed': getFollowingFeed
 };
 
 // Attach handlers to forms
