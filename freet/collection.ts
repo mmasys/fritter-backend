@@ -71,6 +71,24 @@ class FreetCollection {
   }
 
   /**
+   * Get all the freets in the database, sorted from most to least number of likes
+   *
+   * @return {Promise<HydratedDocument<Freet>[]>} - An array of all of the most popular freets
+   */
+  static async findMostPopular(): Promise<Array<HydratedDocument<Freet>>> {
+    return FreetModel.find({}).sort({likes: -1}).populate('authorId');
+  }
+
+  /**
+   * Get all the freets in the database, sorted from most to least number of approves
+   *
+   * @return {Promise<HydratedDocument<Freet>[]>} - An array of all of the most approved freets
+   */
+  static async findMostCredible(): Promise<Array<HydratedDocument<Freet>>> {
+    return FreetModel.find({}).sort({approves: -1}).populate('authorId');
+  }
+
+  /**
    * Update a freet with the new content
    *
    * @param {string} freetId - The id of the freet to be updated
@@ -230,6 +248,7 @@ class FreetCollection {
     const uniqueLinks = isApprove ? freet.uniqueUserApproveLinks : freet.uniqueUserDisproveLinks;
     const userLinkCount = isApprove ? freet.approvers : freet.disprovers;
     const totalLinkCount = isApprove ? freet.approveLinks : freet.disproveLinks;
+    uniqueLinks.delete(uniqueId);
 
     if (isApprove) {
       freet.uniqueUserApproveLinks.delete(uniqueId);

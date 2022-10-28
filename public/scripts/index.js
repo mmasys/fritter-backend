@@ -56,7 +56,10 @@ const formsAndHandlers = {
   'remove-follow': removeFollow,
   'get-followers': getFollowers,
   'get-following': getFollowing,
-  'get-following-feed': getFollowingFeed
+  'get-following-feed': getFollowingFeed,
+  'get-most-popular-freets-feed': getMostPopularFreets,
+  'get-most-credible-freets-feed': getMostCredibleFreets,
+  'get-most-popular-approve-links': getMostPopularLinks
 };
 
 // Attach handlers to forms

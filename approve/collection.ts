@@ -3,6 +3,7 @@ import type {Approve} from './model';
 import FreetModel from '../freet/model';
 import ApproveModel from './model';
 import FreetCollection from '../freet/collection';
+import * as util from './util';
 
 class ApproveCollection {
   /**
@@ -150,6 +151,20 @@ class ApproveCollection {
     }
 
     return false;
+  }
+
+  /**
+   * Get all the approve links on a freet, sorted from most to least number of occurences
+   *
+   * @param {string} freetId - The id of the freet
+   * @return {Promsie<boolean>} - true if link array was produced successfully, else false
+   */
+  static async findMostPopularLinks(
+    freetId: string
+  ): Promise<string[]> {
+    const freet = FreetCollection.findOne(freetId);
+    const {approveLinks} = await freet;
+    return util.sortApproveLinks(approveLinks);
   }
 }
 

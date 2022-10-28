@@ -132,4 +132,38 @@ router.put(
   }
 );
 
+/**
+ * Get most liked freets sorted from most to least liked
+ *
+ * @name GET /api/freets/mostPopular
+ *
+ * @return {FreetResponse[]} - A list of all the freets sorted in descending
+ *                             order by number of likes
+ */
+router.get(
+  '/mostPopular',
+  async (req: Request, res: Response) => {
+    const mostPopularFreets = await FreetCollection.findMostPopular();
+    const response = mostPopularFreets.map(util.constructFreetResponse);
+    res.status(200).json(response);
+  }
+);
+
+/**
+ * Get most approved freets sorted from most to least approved
+ *
+ * @name GET /api/freets/mostCredible
+ *
+ * @return {FreetResponse[]} - A list of all the freets sorted in descending
+ *                             order by number of approves
+ */
+router.get(
+  '/mostCredible',
+  async (req: Request, res: Response) => {
+    const mostCredibleFreets = await FreetCollection.findMostCredible();
+    const response = mostCredibleFreets.map(util.constructFreetResponse);
+    res.status(200).json(response);
+  }
+);
+
 export {router as freetRouter};

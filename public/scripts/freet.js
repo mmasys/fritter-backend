@@ -34,3 +34,15 @@ function deleteFreet(fields) {
     .then(showResponse)
     .catch(showResponse);
 }
+
+function getMostPopularFreets(fields) {
+  fetch('/api/freets/mostPopular')
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function getMostCredibleFreets(fields) {
+  fetch('/api/freets/mostCredible')
+    .then(showResponse)
+    .catch(showResponse);
+}

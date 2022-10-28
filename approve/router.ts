@@ -5,7 +5,8 @@ import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
 import * as likeValidator from '../like/middleware';
 import * as approveValidator from '../approve/middleware';
-import {constructApproveResponse} from './util';
+import {constructApproveResponse, constructLinkResponse} from './util';
+import FreetCollection from '../freet/collection';
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.post(
 /**
  * Remove an approve from a freet
  *
- * @name DELETE /api/approves/:id
+ * @name DELETE /api/approves/removeApprove/:id
  *
  * @return {string} - A success message if the approve is removed, otherwise an error message
  * @throws {403} - If the user is not logged in
@@ -118,6 +119,30 @@ router.put(
         deletedLink
       });
     }
+  }
+);
+
+/**
+ * Get most popular approve links sorted from most to least popular
+ *
+ * @name GET /api/approves/mostPopularLinks/:freetId?
+ *
+ * @param {string} freetId - The freet which approve links we are retrieving
+ * @return {LinkResponse[]} - A list of all the approve links sorted in descending order by number of occurrences
+ * @throws {403} - If user is not logged in or freet has no approve links
+ * @throws {404} - If freet does not exist
+ */
+router.get(
+  '/mostPopularLinks/:freetId?',
+  [
+    userValidator.isUserLoggedIn,
+    approveValidator.isApproveLinksExists
+  ],
+  async (req: Request, res: Response) => {
+    const freet = await FreetCollection.findOne(req.params.freetId);
+    const sortedLinkArray = ApproveCollection.findMostPopularLinks(freet._id.toString());
+    const response = (await sortedLinkArray).map(link => constructLinkResponse(link, freet.approveLinks));
+    res.status(200).json(response);
   }
 );
 
