@@ -3,6 +3,7 @@ import type {Disprove} from './model';
 import FreetModel from '../freet/model';
 import DisproveModel from './model';
 import FreetCollection from '../freet/collection';
+import * as util from './util';
 
 class DisproveCollection {
   /**
@@ -151,6 +152,20 @@ class DisproveCollection {
     }
 
     return false;
+  }
+
+  /**
+   * Get all the disprove links on a freet, sorted from most to least number of occurences
+   *
+   * @param {string} freetId - The id of the freet
+   * @return {Promsie<boolean>} - true if link array was produced successfully, else false
+   */
+  static async findMostPopularLinks(
+    freetId: string
+  ): Promise<string[]> {
+    const freet = FreetCollection.findOne(freetId);
+    const {disproveLinks} = await freet;
+    return util.sortDisproveLinks(disproveLinks);
   }
 }
 

@@ -35,3 +35,9 @@ function removeDisproveLink(fields) {
     .then(showResponse)
     .catch(showResponse);
 }
+
+function getMostPopularDisproveLinks(fields) {
+  fetch(`/api/disproves/mostPopularLinks/${fields.id}`)
+    .then(showResponse)
+    .catch(showResponse);
+}

@@ -36,7 +36,7 @@ function removeApproveLink(fields) {
     .catch(showResponse);
 }
 
-function getMostPopularLinks(fields) {
+function getMostPopularApproveLinks(fields) {
   fetch(`/api/approves/mostPopularLinks/${fields.id}`)
     .then(showResponse)
     .catch(showResponse);

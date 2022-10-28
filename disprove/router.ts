@@ -5,7 +5,8 @@ import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
 import * as likeValidator from '../like/middleware';
 import * as disproveValidator from '../disprove/middleware';
-import {constructDisproveResponse} from './util';
+import {constructDisproveResponse, constructLinkResponse} from './util';
+import FreetCollection from '../freet/collection';
 
 const router = express.Router();
 
@@ -118,6 +119,30 @@ router.put(
         deletedLink
       });
     }
+  }
+);
+
+/**
+ * Get most popular disprove links sorted from most to least popular
+ *
+ * @name GET /api/disproves/mostPopularLinks/:freetId?
+ *
+ * @param {string} freetId - The freet which disprove links we are retrieving
+ * @return {LinkResponse[]} - A list of all the disprove links sorted in descending order by number of occurrences
+ * @throws {403} - If user is not logged in or freet has no disprove links
+ * @throws {404} - If freet does not exist
+ */
+router.get(
+  '/mostPopularLinks/:freetId?',
+  [
+    userValidator.isUserLoggedIn,
+    disproveValidator.isDisproveLinksExists
+  ],
+  async (req: Request, res: Response) => {
+    const freet = await FreetCollection.findOne(req.params.freetId);
+    const sortedLinkArray = DisproveCollection.findMostPopularLinks(freet._id.toString());
+    const response = (await sortedLinkArray).map(link => constructLinkResponse(link, freet.disproveLinks));
+    res.status(200).json(response);
   }
 );
 

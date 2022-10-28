@@ -2,6 +2,7 @@ import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import DisproveCollection from '../disprove/collection';
 import ApproveCollection from '../approve/collection';
+import FreetCollection from '../freet/collection';
 
 /**
  * Checks if the user can disprove the freet
@@ -62,6 +63,28 @@ export const canUserRemoveDisproveLink = async (req: Request, res: Response, nex
   if (!disprover || !link) {
     res.status(403).json({
       error: 'You have not added this disprove link to the freet yet.'
+    });
+    return;
+  }
+
+  next();
+};
+
+/**
+ * Checks if freet has at least one disprove link present or if freet is even present
+ */
+export const isDisproveLinksExists = async (req: Request, res: Response, next: NextFunction) => {
+  const freet = await FreetCollection.findOne(req.params.freetId);
+  if (freet) {
+    if (!freet.disproveLinks) {
+      res.status(403).json({
+        error: 'This freet has no approve links yet.'
+      });
+      return;
+    }
+  } else {
+    res.status(403).json({
+      error: 'This freet has no approve links yet.'
     });
     return;
   }

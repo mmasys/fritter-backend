@@ -59,7 +59,8 @@ const formsAndHandlers = {
   'get-following-feed': getFollowingFeed,
   'get-most-popular-freets-feed': getMostPopularFreets,
   'get-most-credible-freets-feed': getMostCredibleFreets,
-  'get-most-popular-approve-links': getMostPopularLinks
+  'get-most-popular-approve-links': getMostPopularApproveLinks,
+  'get-most-popular-disprove-links': getMostPopularDisproveLinks
 };
 
 // Attach handlers to forms
