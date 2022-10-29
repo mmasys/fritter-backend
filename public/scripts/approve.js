@@ -36,8 +36,8 @@ function removeApproveLink(fields) {
     .catch(showResponse);
 }
 
-function getMostPopularApproveLinks(fields) {
-  fetch(`/api/approves/mostPopularLinks/${fields.id}`)
-    .then(showResponse)
-    .catch(showResponse);
-}
+// Ffunction getMostPopularApproveLinks(fields) {
+//   fetch(`/api/approves/mostPopularLinks/${fields.id}`)
+//     .then(showResponse)
+//     .catch(showResponse);
+// }

@@ -21,7 +21,7 @@ class DisproveCollection {
       disproverId,
       freetId
     });
-    await FreetCollection.updateApprovesOrDisproves(disproverId, freetId, 1, false);
+    await FreetCollection.updateApproveOrDisprove(disproverId, freetId, 1, false);
     await disprove.save();
     return disprove.populate(['disproverId', 'freetId']);
   }
@@ -62,7 +62,7 @@ class DisproveCollection {
       freetId
     });
     if (deletedDisprove) {
-      await FreetCollection.updateApprovesOrDisproves(disproverId, freetId, -1, false);
+      await FreetCollection.updateApproveOrDisprove(disproverId, freetId, -1, false);
     }
 
     return deletedDisprove !== null;

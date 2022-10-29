@@ -21,7 +21,7 @@ class ApproveCollection {
       approverId,
       freetId
     });
-    await FreetCollection.updateApprovesOrDisproves(approverId, freetId, 1, true);
+    await FreetCollection.updateApproveOrDisprove(approverId, freetId, 1, true);
     await approve.save();
     return approve.populate(['approverId', 'freetId']);
   }
@@ -61,32 +61,10 @@ class ApproveCollection {
       freetId
     });
     if (deletedApprove) {
-      await FreetCollection.updateApprovesOrDisproves(approverId, freetId, -1, true);
+      await FreetCollection.updateApproveOrDisprove(approverId, freetId, -1, true);
     }
 
     return deletedApprove !== null;
-  }
-
-  /**
-  * Add an Approve Link to the collection
-  *
-  * @param {string} approverId - The id of the user whos adding the link
-  * @param {string} freetId - The id of the freet
-  * @param {string} link - The link url
-  * @return {Promise<HydratedDocument<Freet>>} - The newly created Freet
-  */
-  static async addApproveLink(
-    approverId: Types.ObjectId,
-    freetId: Types.ObjectId | string,
-    link: string
-  ): Promise<HydratedDocument<Approve>> {
-    const approve = new ApproveModel({
-      approverId,
-      freetId
-    });
-    await FreetCollection.addLink(approverId, freetId, link, true);
-    await approve.save();
-    return approve.populate(['approverId', 'freetId']);
   }
 
   /**

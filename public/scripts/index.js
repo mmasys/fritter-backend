@@ -48,8 +48,9 @@ const formsAndHandlers = {
   'remove-approve': removeApprove,
   'add-disprove': addDisprove,
   'remove-disprove': removeDisprove,
-  'add-approve-link': addApproveLink,
-  'remove-approve-link': removeApproveLink,
+  'add-approve-link': addApproveLinkTwo,
+  'remove-approve-link': removeApproveLinkTwo,
+  'get-most-popular-approve-links': getMostPopularApproveLinks,
   'add-disprove-link': addDisproveLink,
   'remove-disprove-link': removeDisproveLink,
   'add-follow': addFollow,
@@ -59,7 +60,6 @@ const formsAndHandlers = {
   'get-following-feed': getFollowingFeed,
   'get-most-popular-freets-feed': getMostPopularFreets,
   'get-most-credible-freets-feed': getMostCredibleFreets,
-  'get-most-popular-approve-links': getMostPopularApproveLinks,
   'get-most-popular-disprove-links': getMostPopularDisproveLinks
 };
 

@@ -10,6 +10,7 @@
   <script src="./scripts/like.js"></script>
   <script src="./scripts/approve.js"></script>
   <script src="./scripts/disprove.js"></script>
+  <script src="./scripts/link.js"></script>
   <script src="./scripts/follow.js"></script>
   <script src="./scripts/index.js"></script>
 </head>
@@ -188,12 +189,12 @@
         <form id="add-approve-link">
           <h3>Add Approve Link to Freet</h3>
           <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
+            <label for="freetId">Freet ID:</label>
+            <input id="freetId" name="freetId">
           </div>
           <div>
-            <label for="link">Link:</label>
-            <textarea id="link" name="link"></textarea>
+            <label for="url">Link:</label>
+            <textarea id="url" name="url"></textarea>
           </div>
           <input type="submit" value="Add Approve Link">
         </form>
@@ -201,12 +202,12 @@
         <form id="remove-approve-link">
           <h3>Remove Approve Link from Freet</h3>
           <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
+            <label for="freetId">Freet ID:</label>
+            <input id="freetId" name="freetId">
           </div>
           <div>
-            <label for="link">Link:</label>
-            <textarea id="link" name="link"></textarea>
+            <label for="url">Link:</label>
+            <textarea id="url" name="url"></textarea>
           </div>
           <input type="submit" value="Remove Approve Link">
         </form>
@@ -235,6 +236,15 @@
             <textarea id="link" name="link"></textarea>
           </div>
           <input type="submit" value="Remove DisproveLink">
+        </form>
+
+        <form id="get-most-popular-approve-links">
+          <h3>Show Most Popular Approve Links on a Freet</h3>
+          <div>
+            <label for="id">Freet ID:</label>
+            <input id="id" name="id">
+          </div>
+          <input type="submit" value="Get Freet Most Popular Approve Links">
         </form>
 
         <form id="add-follow">
@@ -290,24 +300,6 @@
         <form id="get-most-credible-freets-feed">
           <h3>Show Most Credible Freets</h3>
           <input type="submit" value="Get Most Credible Freets">
-        </form>
-
-        <form id="get-most-popular-approve-links">
-          <h3>Show Most Popular Approve Links on a Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Get Freet Most Popular Approve Links">
-        </form>
-
-        <form id="get-most-popular-disprove-links">
-          <h3>Show Most Popular Disprove Links on a Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Get Freet Most Popular Disprove Links">
         </form>
       </div>
     </section>

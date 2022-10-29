@@ -56,93 +56,11 @@ router.delete(
   ],
   async (req: Request, res: Response) => {
     const {freetId} = req.params;
-    const approve = await ApproveCollection.deleteOne(req.session.userId, freetId);
+    await ApproveCollection.deleteOne(req.session.userId, freetId);
     res.status(200).json({
       message: 'You have successfully removed your approval from the freet.',
       freetId
     });
-  }
-);
-
-/**
- * Add an Approve link to a freet.
- *
- * @name PUT /api/approves/addLink/:id
- *
- * @param {string} freetId - The freet to add the link to
- * @param {string} url - The link url to be added
- * @return {ApproveResponse} - The created approval
- * @throws {403} - If the user is not logged in
- * @throws {404} - If freet does not exist or the user has already added that
- *                 specific link or that user has already added 3 unique links
- */
-router.put(
-  '/addLink/:freetId?',
-  [
-    userValidator.isUserLoggedIn,
-    likeValidator.isFreetExists,
-    approveValidator.canUserAddApproveLink
-  ],
-  async (req: Request, res: Response) => {
-    const link = await ApproveCollection.addApproveLink(req.session.userId, req.params.freetId, req.body.link);
-    if (link) {
-      res.status(201).json({
-        message: 'You have successfully added an Approve link.',
-        link
-      });
-    }
-  }
-);
-
-/**
- * Remove an Approve link from a freet.
- *
- * @name PUT /api/approves/removeLink/:id
- *
- * @param {string} freetId - The freet to remove the link from
- * @param {string} url - The link url to be removed
- * @throws {403} - If the user is not logged in
- * @throws {404} - If freet or link do not exist
- */
-router.put(
-  '/removeLink/:freetId?',
-  [
-    userValidator.isUserLoggedIn,
-    likeValidator.isFreetExists,
-    approveValidator.canUserRemoveApproveLink
-  ],
-  async (req: Request, res: Response) => {
-    const deletedLink = await ApproveCollection.deleteApproveLink(req.session.userId, req.params.freetId, req.body.link);
-    if (deletedLink) {
-      res.status(201).json({
-        message: 'You have successfully removed an Approve link.',
-        deletedLink
-      });
-    }
-  }
-);
-
-/**
- * Get most popular approve links sorted from most to least popular
- *
- * @name GET /api/approves/mostPopularLinks/:freetId?
- *
- * @param {string} freetId - The freet which approve links we are retrieving
- * @return {LinkResponse[]} - A list of all the approve links sorted in descending order by number of occurrences
- * @throws {403} - If user is not logged in or freet has no approve links
- * @throws {404} - If freet does not exist
- */
-router.get(
-  '/mostPopularLinks/:freetId?',
-  [
-    userValidator.isUserLoggedIn,
-    approveValidator.isApproveLinksExists
-  ],
-  async (req: Request, res: Response) => {
-    const freet = await FreetCollection.findOne(req.params.freetId);
-    const sortedLinkArray = ApproveCollection.findMostPopularLinks(freet._id.toString());
-    const response = (await sortedLinkArray).map(link => constructLinkResponse(link, freet.approveLinks));
-    res.status(200).json(response);
   }
 );
 
