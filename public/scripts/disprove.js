@@ -15,29 +15,3 @@ function removeDisprove(fields) {
     .then(showResponse)
     .catch(showResponse);
 }
-
-function addDisproveLink(fields) {
-  fetch(`/api/disproves/addLink/${fields.id}`, {
-    method: 'PUT',
-    body: JSON.stringify(fields),
-    headers: {'Content-Type': 'application/json'}
-  })
-    .then(showResponse)
-    .catch(showResponse);
-}
-
-function removeDisproveLink(fields) {
-  fetch(`/api/disproves/removeLink/${fields.id}`, {
-    method: 'PUT',
-    body: JSON.stringify(fields),
-    headers: {'Content-Type': 'application/json'}
-  })
-    .then(showResponse)
-    .catch(showResponse);
-}
-
-function getMostPopularDisproveLinks(fields) {
-  fetch(`/api/disproves/mostPopularLinks/${fields.id}`)
-    .then(showResponse)
-    .catch(showResponse);
-}

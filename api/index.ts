@@ -16,6 +16,7 @@ import {approveRouter} from '../approve/router';
 import {disproveRouter} from '../disprove/router';
 import {linkRouter} from '../link/router';
 import {followRouter} from '../follow/router';
+import {limitRouter} from '../limit/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -86,6 +87,7 @@ app.use('/api/approves', approveRouter);
 app.use('/api/disproves', disproveRouter);
 app.use('/api/link', linkRouter);
 app.use('/api/follow', followRouter);
+app.use('/api/limit', limitRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

@@ -48,11 +48,12 @@ const formsAndHandlers = {
   'remove-approve': removeApprove,
   'add-disprove': addDisprove,
   'remove-disprove': removeDisprove,
-  'add-approve-link': addApproveLinkTwo,
-  'remove-approve-link': removeApproveLinkTwo,
+  'add-approve-link': addApproveLink,
+  'remove-approve-link': removeApproveLink,
   'get-most-popular-approve-links': getMostPopularApproveLinks,
   'add-disprove-link': addDisproveLink,
   'remove-disprove-link': removeDisproveLink,
+  'get-most-popular-disprove-links': getMostPopularDisproveLinks,
   'add-follow': addFollow,
   'remove-follow': removeFollow,
   'get-followers': getFollowers,
@@ -60,7 +61,10 @@ const formsAndHandlers = {
   'get-following-feed': getFollowingFeed,
   'get-most-popular-freets-feed': getMostPopularFreets,
   'get-most-credible-freets-feed': getMostCredibleFreets,
-  'get-most-popular-disprove-links': getMostPopularDisproveLinks
+  'add-fritter-limit': addLimit,
+  'reset-fritter-limit': resetLimit,
+  'get-fritter-limit': getLimit,
+  'decrement-fritter-timer': decrementTimer
 };
 
 // Attach handlers to forms

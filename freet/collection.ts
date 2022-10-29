@@ -158,7 +158,7 @@ class FreetCollection {
       freet.approves += change;
       if (change === -1) {
         freet.approvers.get(userId).forEach(async link => {
-          const approveLink = await LinkCollection.findOneApproveLink(link, freetId);
+          const approveLink = await LinkCollection.findOneLink(link, freetId, true);
           if (approveLink.count !== 1) {
             approveLink.count -= 1;
           }
@@ -174,13 +174,13 @@ class FreetCollection {
       freet.disproves += change;
       if (change === -1) {
         freet.disprovers.get(userId).forEach(async link => {
-          const approveLink = await LinkCollection.findOneApproveLink(link, freetId);
-          if (approveLink.count !== 1) {
-            approveLink.count -= 1;
+          const disproveLink = await LinkCollection.findOneLink(link, freetId, false);
+          if (disproveLink.count !== 1) {
+            disproveLink.count -= 1;
           }
 
-          approveLink.users = approveLink.users.filter(user => user !== userId);
-          await approveLink.save();
+          disproveLink.users = disproveLink.users.filter(user => user !== userId);
+          await disproveLink.save();
         });
         freet.disprovers.delete(userId);
       } else {
@@ -216,6 +216,38 @@ class FreetCollection {
       }
 
       const linkCount = freet.approveLinks.get(url);
+      await freet.save();
+      return linkCount;
+    }
+
+    return false;
+  }
+
+  /**
+   * Add the approve link to the freet
+   *
+   * @param userId id of the user
+   * @param freetId id of the freet
+   * @param url the url that the user is trying to add
+   * @return {Promise<number | boolean>} link count if it was added successfully, otherwise false
+   */
+  static async addDisproveLink(
+    userId: Types.ObjectId | string,
+    freetId: Types.ObjectId | string,
+    url: string
+  ): Promise<number | boolean> {
+    const freet = await FreetModel.findById(freetId);
+    const {disprovers} = freet;
+    const {disproveLinks} = freet;
+    if (!disprovers.get(userId).includes(url) && disprovers.get(userId).length < 3) {
+      freet.disprovers.get(userId).push(url);
+      if (disproveLinks.has(url)) {
+        freet.disproveLinks.set(url, freet.disproveLinks.get(url) + 1);
+      } else {
+        freet.disproveLinks.set(url, 1);
+      }
+
+      const linkCount = freet.disproveLinks.get(url);
       await freet.save();
       return linkCount;
     }

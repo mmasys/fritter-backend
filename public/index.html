@@ -12,6 +12,7 @@
   <script src="./scripts/disprove.js"></script>
   <script src="./scripts/link.js"></script>
   <script src="./scripts/follow.js"></script>
+  <script src="./scripts/limit.js"></script>
   <script src="./scripts/index.js"></script>
 </head>
 
@@ -24,283 +25,344 @@
     <section id="operations-container">
       <h2>Operations:</h2>
       <div class="scrollbox">
-        <form id="create-user">
-          <h3>Create User</h3>
-          <div>
-            <label for="username">Username:</label>
-            <input id="username" name="username">
-          </div>
-          <div>
-            <label for="password">Password:</label>
-            <input id="password" name="password">
-          </div>
-          <input type="submit" value="Create User">
-        </form>
+        <div id="User Operations">
+          <h2>User Operations::</h2>
 
-        <form id="delete-user">
-          <h3>Delete User</h3>
-          <input type="submit" value="Delete User">
-        </form>
+          <form id="create-user">
+            <h3>Create User</h3>
+            <div>
+              <label for="username">Username:</label>
+              <input id="username" name="username">
+            </div>
+            <div>
+              <label for="password">Password:</label>
+              <input id="password" name="password">
+            </div>
+            <input type="submit" value="Create User">
+          </form>
 
-        <form id="change-username">
-          <h3>Change Username</h3>
-          <div>
-            <label for="username">New Username:</label>
-            <input id="username" name="username">
-          </div>
-          <input type="submit" value="Change Username">
-        </form>
+          <form id="delete-user">
+            <h3>Delete User</h3>
+            <input type="submit" value="Delete User">
+          </form>
 
-        <form id="change-password">
-          <h3>Change Password</h3>
-          <div>
-            <label for="password">New Password:</label>
-            <input id="password" name="password">
-          </div>
-          <input type="submit" value="Change Password">
-        </form>
+          <form id="change-username">
+            <h3>Change Username</h3>
+            <div>
+              <label for="username">New Username:</label>
+              <input id="username" name="username">
+            </div>
+            <input type="submit" value="Change Username">
+          </form>
 
-        <form id="sign-in">
-          <h3>Sign In</h3>
-          <div>
-            <label for="username">Username:</label>
-            <input id="username" name="username">
-          </div>
-          <div>
-            <label for="password">Password:</label>
-            <input id="password" name="password">
-          </div>
-          <input type="submit" value="Sign In">
-        </form>
+          <form id="change-password">
+            <h3>Change Password</h3>
+            <div>
+              <label for="password">New Password:</label>
+              <input id="password" name="password">
+            </div>
+            <input type="submit" value="Change Password">
+          </form>
 
-        <form id="sign-out">
-          <h3>Sign Out</h3>
-          <input type="submit" value="Sign out">
-        </form>
+          <form id="sign-in">
+            <h3>Sign In</h3>
+            <div>
+              <label for="username">Username:</label>
+              <input id="username" name="username">
+            </div>
+            <div>
+              <label for="password">Password:</label>
+              <input id="password" name="password">
+            </div>
+            <input type="submit" value="Sign In">
+          </form>
+  
+          <form id="sign-out">
+            <h3>Sign Out</h3>
+            <input type="submit" value="Sign out">
+          </form>
+        </div>
 
-        <form id="view-all-freets">
+        <div id="Freet Operations">
+          <h2>Freet Operations::</h2>
+
+          <form id="view-all-freets">
             <h3>View All Freets</h3>
             <input type="submit" value="View All Freets">
-        </form>
+          </form>
 
-        <form id="view-freets-by-author">
-          <h3>View Freets By Author</h3>
-          <div>
-            <label for="author">Author:</label>
-            <input id="author" name="author">
-          </div>
-          <input type="submit" value="View Freets By Author">
-        </form>
+          <form id="view-freets-by-author">
+            <h3>View Freets By Author</h3>
+            <div>
+              <label for="author">Author:</label>
+              <input id="author" name="author">
+            </div>
+            <input type="submit" value="View Freets By Author">
+          </form>
+  
+          <form id="create-freet">
+            <h3>Create Freet</h3>
+            <div>
+              <label for="content">Content:</label>
+              <textarea id="content" name="content"></textarea>
+            </div>
+            <input type="submit" value="Create Freet">
+          </form>
+  
+          <form id="edit-freet">
+            <h3>Edit Freet</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id">
+            </div>
+            <div>
+              <label for="content">Content:</label>
+              <textarea id="content" name="content"></textarea>
+            </div>
+            <input type="submit" value="Edit Freet">
+          </form>
+  
+          <form id="delete-freet">
+            <h3>Delete Freet</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Delete Freet">
+          </form>
+        </div>
 
-        <form id="create-freet">
-          <h3>Create Freet</h3>
-          <div>
-            <label for="content">Content:</label>
-            <textarea id="content" name="content"></textarea>
-          </div>
-          <input type="submit" value="Create Freet">
-        </form>
+        <div id="Like Operations">
+          <h2>Like Operations::</h2>
 
-        <form id="edit-freet">
-          <h3>Edit Freet</h3>
-          <div>
-            <label for="id">ID:</label>
-            <input id="id" name="id">
-          </div>
-          <div>
-            <label for="content">Content:</label>
-            <textarea id="content" name="content"></textarea>
-          </div>
-          <input type="submit" value="Edit Freet">
-        </form>
+          <form id="add-like">
+            <h3>Like a Freet</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Like Freet">
+          </form>
+  
+          <form id="remove-like">
+            <h3>Remove Like from Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Remove Like">
+          </form>
+  
+          <form id="find-liked-freets">
+            <h3>Show User's Liked Freets</h3>
+            <div>
+              <label for="id">User ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Show Liked Freets">
+          </form>
+        </div>
 
-        <form id="delete-freet">
-          <h3>Delete Freet</h3>
-          <div>
-            <label for="id">ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Delete Freet">
-        </form>
+        <div id="Approve Operation">
+          <h2>Approve Operations::</h2>
 
-        <form id="add-like">
-          <h3>Like a Freet</h3>
-          <div>
-            <label for="id">ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Like Freet">
-        </form>
+          <form id="add-approve">
+            <h3>Approve a Freet</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Approve Freet">
+          </form>
+  
+          <form id="remove-approve">
+            <h3>Remove Approve from Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Remove Approve">
+          </form>
 
-        <form id="remove-like">
-          <h3>Remove Like from Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Remove Like">
-        </form>
+          <form id="add-approve-link">
+            <h3>Add Approve Link to Freet</h3>
+            <div>
+              <label for="freetId">Freet ID:</label>
+              <input id="freetId" name="freetId">
+            </div>
+            <div>
+              <label for="url">Link:</label>
+              <textarea id="url" name="url"></textarea>
+            </div>
+            <input type="submit" value="Add Approve Link">
+          </form>
+  
+          <form id="remove-approve-link">
+            <h3>Remove Approve Link from Freet</h3>
+            <div>
+              <label for="freetId">Freet ID:</label>
+              <input id="freetId" name="freetId">
+            </div>
+            <div>
+              <label for="url">Link:</label>
+              <textarea id="url" name="url"></textarea>
+            </div>
+            <input type="submit" value="Remove Approve Link">
+          </form>
 
-        <form id="find-liked-freets">
-          <h3>Show User's Liked Freets</h3>
-          <div>
-            <label for="id">User ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Show Liked Freets">
-        </form>
+          <form id="get-most-popular-approve-links">
+            <h3>Show Most Popular Approve Links on a Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Get Freet Most Popular Approve Links">
+          </form>
+        </div>
 
-        <form id="add-approve">
-          <h3>Approve a Freet</h3>
-          <div>
-            <label for="id">ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Approve Freet">
-        </form>
+        <div id="Disprove Operations">
+          <h2>Disprove Operations::</h2>
 
-        <form id="remove-approve">
-          <h3>Remove Approve from Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Remove Approve">
-        </form>
+          <form id="add-disprove">
+            <h3>Disprove a Freet</h3>
+            <div>
+              <label for="id">ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Disprove Freet">
+          </form>
+  
+          <form id="remove-disprove">
+            <h3>Remove Disprove from Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Remove Disprove">
+          </form>
+  
+          <form id="add-disprove-link">
+            <h3>Add Disprove Link to Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <div>
+              <label for="link">Link:</label>
+              <textarea id="link" name="link"></textarea>
+            </div>
+            <input type="submit" value="Add Disprove Link">
+          </form>
+  
+          <form id="remove-disprove-link">
+            <h3>Remove Disprove Link from Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <div>
+              <label for="link">Link:</label>
+              <textarea id="link" name="link"></textarea>
+            </div>
+            <input type="submit" value="Remove DisproveLink">
+          </form>
 
-        <form id="add-disprove">
-          <h3>Disprove a Freet</h3>
-          <div>
-            <label for="id">ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Disprove Freet">
-        </form>
+          <form id="get-most-popular-disprove-links">
+            <h3>Show Most Popular Disprove Links on a Freet</h3>
+            <div>
+              <label for="id">Freet ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Get Freet Most Popular Disprove Links">
+          </form>
+        </div>
 
-        <form id="remove-disprove">
-          <h3>Remove Disprove from Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Remove Disprove">
-        </form>
+        <div id="Follow Operations">
+          <h2>Follow Operations::</h2>
 
-        <form id="add-approve-link">
-          <h3>Add Approve Link to Freet</h3>
-          <div>
-            <label for="freetId">Freet ID:</label>
-            <input id="freetId" name="freetId">
-          </div>
-          <div>
-            <label for="url">Link:</label>
-            <textarea id="url" name="url"></textarea>
-          </div>
-          <input type="submit" value="Add Approve Link">
-        </form>
+          <form id="add-follow">
+            <h3>Follow User</h3>
+            <div>
+              <label for="id">Username of User to Follow:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Follow User">
+          </form>
+  
+          <form id="remove-follow">
+            <h3>Unfollow User</h3>
+            <div>
+              <label for="id">Username of User to Unfollow:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Unfollow User">
+          </form>
+  
+          <form id="get-followers">
+            <h3>Show User's Followers</h3>
+            <div>
+              <label for="id">User ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Get User Followers">
+          </form>
+  
+          <form id="get-following">
+            <h3>Show User's Following</h3>
+            <div>
+              <label for="id">User ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Get User Following">
+          </form>
+        </div>
 
-        <form id="remove-approve-link">
-          <h3>Remove Approve Link from Freet</h3>
-          <div>
-            <label for="freetId">Freet ID:</label>
-            <input id="freetId" name="freetId">
-          </div>
-          <div>
-            <label for="url">Link:</label>
-            <textarea id="url" name="url"></textarea>
-          </div>
-          <input type="submit" value="Remove Approve Link">
-        </form>
+        <div id="Feed Operations">
+          <h2>Feed Operations::</h2>
 
-        <form id="add-disprove-link">
-          <h3>Add Disprove Link to Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <div>
-            <label for="link">Link:</label>
-            <textarea id="link" name="link"></textarea>
-          </div>
-          <input type="submit" value="Add Disprove Link">
-        </form>
+          <form id="get-following-feed">
+            <h3>Show User's Following Feed</h3>
+            <div>
+              <label for="id">User ID:</label>
+              <input id="id" name="id">
+            </div>
+            <input type="submit" value="Get User Following Feed">
+          </form>
+          
+          <form id="get-most-popular-freets-feed">
+            <h3>Show Most Popular Freets</h3>
+            <input type="submit" value="Get Most Popular Freets">
+          </form>
+  
+          <form id="get-most-credible-freets-feed">
+            <h3>Show Most Credible Freets</h3>
+            <input type="submit" value="Get Most Credible Freets">
+          </form>
+        </div>
 
-        <form id="remove-disprove-link">
-          <h3>Remove Disprove Link from Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <div>
-            <label for="link">Link:</label>
-            <textarea id="link" name="link"></textarea>
-          </div>
-          <input type="submit" value="Remove DisproveLink">
-        </form>
+        <div id="Fritter Limit Operations">
+          <h2>Fritter Limit Operations::</h2>
 
-        <form id="get-most-popular-approve-links">
-          <h3>Show Most Popular Approve Links on a Freet</h3>
-          <div>
-            <label for="id">Freet ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Get Freet Most Popular Approve Links">
-        </form>
-
-        <form id="add-follow">
-          <h3>Follow User</h3>
-          <div>
-            <label for="id">Username of User to Follow:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Follow User">
-        </form>
-
-        <form id="remove-follow">
-          <h3>Unfollow User</h3>
-          <div>
-            <label for="id">Username of User to Unfollow:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Unfollow User">
-        </form>
-
-        <form id="get-followers">
-          <h3>Show User's Followers</h3>
-          <div>
-            <label for="id">User ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Get User Followers">
-        </form>
-
-        <form id="get-following">
-          <h3>Show User's Following</h3>
-          <div>
-            <label for="id">User ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Get User Following">
-        </form>
-
-        <form id="get-following-feed">
-          <h3>Show User's Following Feed</h3>
-          <div>
-            <label for="id">User ID:</label>
-            <input id="id" name="id">
-          </div>
-          <input type="submit" value="Get User Following Feed">
-        </form>
-        
-        <form id="get-most-popular-freets-feed">
-          <h3>Show Most Popular Freets</h3>
-          <input type="submit" value="Get Most Popular Freets">
-        </form>
-
-        <form id="get-most-credible-freets-feed">
-          <h3>Show Most Credible Freets</h3>
-          <input type="submit" value="Get Most Credible Freets">
-        </form>
+          <form id="add-fritter-limit">
+            <h3>Add User's Fritter Limit</h3>
+            <input type="submit" value="Add User's Fritter Limit">
+          </form>
+  
+          <form id="reset-fritter-limit">
+            <h3>Reset User's Fritter Limit</h3>
+            <input type="submit" value="Reset User's Fritter Limit">
+          </form>
+  
+          <form id="get-fritter-limit">
+            <h3>Get User's Fritter Limit</h3>
+            <input type="submit" value="Get User's Fritter Limit">
+          </form>
+  
+          <form id="decrement-fritter-limit">
+            <h3>Decrement User's Fritter Limit</h3>
+            <input type="submit" value="Decrement User's Fritter Limit">
+          </form>
+        </div>
       </div>
     </section>
     <section>

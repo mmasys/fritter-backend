@@ -1,6 +1,7 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {User} from './model';
 import UserModel from './model';
+import LimitCollection from '../limit/collection';
 
 /**
  * This file contains a class with functionality to interact with users stored
@@ -22,6 +23,7 @@ class UserCollection {
     const dateJoined = new Date();
 
     const user = new UserModel({username, password, dateJoined});
+    await LimitCollection.addLimit(user._id);
     await user.save(); // Saves user to MongoDB
     return user;
   }

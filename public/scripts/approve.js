@@ -15,29 +15,3 @@ function removeApprove(fields) {
     .then(showResponse)
     .catch(showResponse);
 }
-
-function addApproveLink(fields) {
-  fetch(`/api/approves/addLink/${fields.id}`, {
-    method: 'PUT',
-    body: JSON.stringify(fields),
-    headers: {'Content-Type': 'application/json'}
-  })
-    .then(showResponse)
-    .catch(showResponse);
-}
-
-function removeApproveLink(fields) {
-  fetch(`/api/approves/removeLink/${fields.id}`, {
-    method: 'PUT',
-    body: JSON.stringify(fields),
-    headers: {'Content-Type': 'application/json'}
-  })
-    .then(showResponse)
-    .catch(showResponse);
-}
-
-// Ffunction getMostPopularApproveLinks(fields) {
-//   fetch(`/api/approves/mostPopularLinks/${fields.id}`)
-//     .then(showResponse)
-//     .catch(showResponse);
-// }
