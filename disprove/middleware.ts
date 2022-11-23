@@ -1,5 +1,4 @@
 import type {Request, Response, NextFunction} from 'express';
-import {Types} from 'mongoose';
 import DisproveCollection from '../disprove/collection';
 import ApproveCollection from '../approve/collection';
 import FreetCollection from '../freet/collection';

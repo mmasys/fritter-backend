@@ -61,10 +61,9 @@ const formsAndHandlers = {
   'get-following-feed': getFollowingFeed,
   'get-most-popular-freets-feed': getMostPopularFreets,
   'get-most-credible-freets-feed': getMostCredibleFreets,
-  'add-fritter-limit': addLimit,
   'reset-fritter-limit': resetLimit,
   'get-fritter-limit': getLimit,
-  'decrement-fritter-timer': decrementTimer
+  'decrement-fritter-limit': decrementLimit
 };
 
 // Attach handlers to forms

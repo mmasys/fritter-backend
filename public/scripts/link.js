@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+
 function addApproveLink(fields) {
   fetch(`/api/link/addApproveLink/${fields.freetId}/${fields.url}`, {
     method: 'POST',

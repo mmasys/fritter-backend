@@ -5,8 +5,7 @@ import * as userValidator from '../user/middleware';
 import * as freetValidator from '../freet/middleware';
 import * as likeValidator from '../like/middleware';
 import * as approveValidator from '../approve/middleware';
-import {constructApproveResponse, constructLinkResponse} from './util';
-import FreetCollection from '../freet/collection';
+import {constructApproveResponse} from './util';
 
 const router = express.Router();
 

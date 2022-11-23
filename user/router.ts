@@ -55,7 +55,7 @@ router.delete(
   [
     userValidator.isUserLoggedIn
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     req.session.userId = undefined;
     res.status(200).json({
       message: 'You have been logged out successfully.'

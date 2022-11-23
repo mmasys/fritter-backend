@@ -1,5 +1,4 @@
 import type {HydratedDocument} from 'mongoose';
-import type {User} from '../user/model';
 import type {Freet} from '../freet/model';
 import type {Link, PopulatedLink} from './model';
 

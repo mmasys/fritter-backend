@@ -2,7 +2,6 @@ import type {Freet} from '../freet/model';
 import type {HydratedDocument} from 'mongoose';
 import type {Follow, PopulatedFollow} from '../Follow/model';
 import FreetCollection from '../freet/collection';
-import UserCollection from '../user/collection';
 
 type FollowResponse = {
   _id: string;

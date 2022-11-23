@@ -128,45 +128,35 @@ router.post(
     linkValidator.canUserAddDisproveLink
   ],
   async (req: Request, res: Response) => {
-    const body = req.body as string;
-    const {query} = req;
-    const {params} = req;
-    const {session} = req;
-    res.status(201).json({
-      body,
-      query,
-      params,
-      session
-    });
-    // Cconst userId = req.session.userId as string;
-    // const {url} = req.params;
-    // const {freetId} = req.params;
-    // const link = await LinkCollection.findOneLink(url, freetId, false);
-    // if (link) {
-    //   const updatedLink = await LinkCollection.updateOneDisproveLink(userId, url, freetId);
-    //   if (updatedLink) {
-    //     res.status(201).json({
-    //       message: 'You have successfully added a Disprove link.',
-    //       updatedLink
-    //     });
-    //   } else {
-    //     res.status(404).json({
-    //       message: 'You are not able to add this Disprove link.'
-    //     });
-    //   }
-    // } else {
-    //   const addedLink = await LinkCollection.addOneDisproveLink(userId, url, freetId);
-    //   if (addedLink) {
-    //     res.status(201).json({
-    //       message: 'You have successfully added a Disprove link.',
-    //       addedLink
-    //     });
-    //   } else {
-    //     res.status(404).json({
-    //       message: 'You are not able to add this Disprove link.'
-    //     });
-    //   }
-    // }
+    const userId = req.session.userId as string;
+    const {url} = req.params;
+    const {freetId} = req.params;
+    const link = await LinkCollection.findOneLink(url, freetId, true);
+    if (link) {
+      const updatedLink = await LinkCollection.updateOneDisproveLink(userId, url, freetId);
+      if (updatedLink) {
+        res.status(201).json({
+          message: 'You have successfully added a Disprove link.',
+          updatedLink
+        });
+      } else {
+        res.status(404).json({
+          message: 'You are not able to add this Disprove link.'
+        });
+      }
+    } else {
+      const addedLink = await LinkCollection.addOneDisproveLink(userId, url, freetId);
+      if (addedLink) {
+        res.status(201).json({
+          message: 'You have successfully added a Disprove link.',
+          addedLink
+        });
+      } else {
+        res.status(404).json({
+          message: 'You are not able to add this Disprove link.'
+        });
+      }
+    }
   }
 );
 

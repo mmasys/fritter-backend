@@ -1,15 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-
-function addLimit(fields) {
-  fetch('/api/limit/initialize', {
-    method: 'POST',
-    body: JSON.stringify(fields),
-    headers: {'Content-Type': 'application/json'}
-  })
-    .then(showResponse)
-    .catch(showResponse);
-}
-
 function resetLimit(fields) {
   fetch('/api/limit/reset', {
     method: 'PUT',
@@ -21,13 +9,13 @@ function resetLimit(fields) {
 }
 
 function getLimit(fields) {
-  fetch('/api/link/getLimit')
+  fetch('/api/limit/getLimit')
     .then(showResponse)
     .catch(showResponse);
 }
 
-function decrementTimer(fields) {
-  fetch('/api/limit/decrementTimer', {
+function decrementLimit(fields) {
+  fetch('/api/limit/decrementLimit', {
     method: 'PUT',
     body: JSON.stringify(fields),
     headers: {'Content-Type': 'application/json'}

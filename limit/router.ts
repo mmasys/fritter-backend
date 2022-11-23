@@ -1,39 +1,11 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import * as userValidator from '../user/middleware';
+import * as limitValidator from './middleware';
+import UserCollection from '../user/collection';
 import LimitCollection from './collection';
 
 const router = express.Router();
-
-/**
- * Initialize Fritter Limit for the user
- *
- * @name POST /api/limit/initialize
- *
- * @return {LimitResponse} - The created limit
- * @throws {403} - If the user is not logged
- * @throws {404} - If unable to create Fritter Limit
- */
-router.post(
-  '/initialize',
-  [
-    userValidator.isUserLoggedIn
-  ],
-  async (req: Request, res: Response) => {
-    const userId = req.session.userId as string;
-    const limit = await LimitCollection.addLimit(userId);
-    if (limit) {
-      res.status(201).json({
-        message: 'You have successfully added the Fritter Limit.',
-        limit
-      });
-    } else {
-      res.status(404).json({
-        message: 'Unable to add the Fritter Limit.'
-      });
-    }
-  }
-);
 
 /**
  * Reset timer to 1 hr and canPost to true.
@@ -51,9 +23,10 @@ router.put(
   ],
   async (req: Request, res: Response) => {
     const userId = req.session.userId as string;
-    const limit = await LimitCollection.findOne(userId);
-    const result = await LimitCollection.resetLimit(userId);
-    if (result) {
+    await LimitCollection.resetLimit(userId);
+    const user = await UserCollection.findOneByUserId(userId);
+    const limit = user.timeLeft;
+    if (limitValidator.isLimitExists) {
       res.status(201).json({
         message: 'You have successfully reset the Fritter Limit.',
         limit
@@ -82,10 +55,13 @@ router.get(
   ],
   async (req: Request, res: Response) => {
     const userId = req.session.userId as string;
-    const limit = await LimitCollection.findOne(userId);
+    const user = await UserCollection.findOneByUserId(userId);
+    const limit = user.timeLeft;
+    const {canPost} = user;
     if (limit) {
       res.status(201).json({
-        limit
+        limit,
+        canPost
       });
     } else {
       res.status(404).json({
@@ -98,34 +74,30 @@ router.get(
 /**
  * Decrement Fritter Limit timer of specific user.
  *
- * @name PUT /api/limit/decrementTimer
+ * @name PUT /api/limit/decrementLimit
  *
  * @return {LimitResponse} - The updated limit
  * @throws {403} - If the user is not logged
  * @throws {404} - If unable to find the Fritter Limit or decrement the timer (reached limit)
  */
 router.put(
-  '/decrementTimer',
+  '/decrementLimit',
   [
     userValidator.isUserLoggedIn
   ],
   async (req: Request, res: Response) => {
     const userId = req.session.userId as string;
-    const limit = await LimitCollection.decrementTimer(userId);
-    if (limit) {
-      if (typeof limit === 'string') {
-        res.status(404).json({
-          message: 'You have reached your Fritter Limit for the day'
-        });
-      } else {
-        res.status(201).json({
-          message: 'You have successfully decremented the Fritter Timer.',
-          limit
-        });
-      }
+    const result = await LimitCollection.decrementLimit(userId);
+    const user = await UserCollection.findOneByUserId(userId);
+    const limit = user.timeLeft;
+    if (result) {
+      res.status(201).json({
+        message: 'You have successfully decremented the Fritter Timer.',
+        limit
+      });
     } else {
       res.status(404).json({
-        message: 'Unable to decrement the Fritter Limit.'
+        message: 'You have reached your Fritter Limit for the day.'
       });
     }
   }

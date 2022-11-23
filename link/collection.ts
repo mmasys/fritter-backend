@@ -1,6 +1,5 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {Link} from './model';
-import FreetModel from '../freet/model';
 import LinkModel from './model';
 import FreetCollection from '../freet/collection';
 

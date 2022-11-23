@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+
 function addFollow(fields) {
   fetch('/api/follow', {
     method: 'POST',

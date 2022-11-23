@@ -12,6 +12,13 @@ export type User = {
   username: string;
   password: string;
   dateJoined: Date;
+  timeLeft: {
+    total: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  };
+  canPost: boolean;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -31,6 +38,18 @@ const UserSchema = new Schema({
   // The date the user joined
   dateJoined: {
     type: Date,
+    required: true
+  },
+  // The user's fritter limit time remaining
+  timeLeft: {
+    total: Number,
+    hours: Number,
+    minutes: Number,
+    seconds: Number
+  },
+  // True if the user can still post today, false otherwise
+  canPost: {
+    type: Boolean,
     required: true
   }
 });
