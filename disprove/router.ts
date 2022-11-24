@@ -40,7 +40,7 @@ router.post(
 /**
  * Remove a disprove from a freet
  *
- * @name DELETE /api/approves/removeDisprove/:id
+ * @name DELETE /api/disproves/removeDisprove/:id
  *
  * @return {string} - A success message if the disprove is removed, otherwise an error message
  * @throws {403} - If the user is not logged in

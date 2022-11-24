@@ -12,7 +12,7 @@ const router = express.Router();
  *
  * @name POST /api/link/addApproveLink/:freetId?/:url?
  *
- * @param {string} userId - The if of the user that added the link
+ * @param {string} userId - The id of the user that added the link
  * @param {string} freetId - The id of the freet that the link will be added to
  * @param {string} url - The url of the link to be added
  * @return {LinkResponse} - The created approval
@@ -65,7 +65,7 @@ router.post(
  *
  * @name DELETE /api/link/removeApproveLink/:freetId?/:url?
  *
- * @param {string} userId - The if of the user that added the link
+ * @param {string} userId - The id of the user that added the link
  * @param {string} freetId - The id of the freet that the link will be removed from
  * @param {string} url - The url of the link to be removed
  * @throws {403} - If the user is not logged in
@@ -95,8 +95,7 @@ router.delete(
  *
  * @name GET /api/link/getMostPopularApproveLinks/:freetId?
  *
- * @return {LinkResponse[]} - A list of all the freets sorted in descending
- *                             order by number of adds
+ * @return {LinkResponse[]} - A list of all the links sorted in descending order by number of adds
  */
 router.get(
   '/getMostPopularApproveLinks/:freetId?',
@@ -112,7 +111,7 @@ router.get(
  *
  * @name POST /api/link/addDisproveLink/:freetId?/:url?
  *
- * @param {string} userId - The if of the user that added the link
+ * @param {string} userId - The if of the user that is adding the link
  * @param {string} freetId - The id of the freet that the link will be added to
  * @param {string} url - The url of the link to be added
  * @return {LinkResponse} - The created disproval

@@ -167,13 +167,84 @@ Mongoose allows you to use schema validation if you want to ensure that certain 
 
 within the schema. This tells us that the `content` field must have type `String`, and that it is required for documents in that collection. A freet must have a `String` type value for the `content` field to be added to the freets collection.
 
-## API routes
-
-The following api routes have already been implemented for you (**Make sure to document all the routes that you have added.**):
-
+## All API routes
 #### `GET /`
 
 This renders the `index.html` file that will be used to interact with the backend
+
+#### `POST /api/users` - Create an new user account
+
+**Body**
+
+- `username` _{string}_ - The user's username
+- `password` _{string}_ - The user's password
+
+**Returns**
+
+- A success message
+- An object with the created user's details (without password)
+
+**Throws**
+
+- `403` if there is a user already logged in
+- `400` if username or password is in the wrong format
+- `409` if username is already in use
+
+#### `DELETE /api/users` - Delete user
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if the user is not logged in
+
+#### `PUT /api/users` - Update a user's profile
+
+**Body** _(no need to add fields that are not being changed)_
+
+- `username` _{string}_ - The user's username
+- `password` _{string}_ - The user's password
+
+**Returns**
+
+- A success message
+- An object with the update user details (without password)
+
+**Throws**
+
+- `403` if the user is not logged in
+- `400` if username or password is in the wrong format
+- `409` if the username is already in use
+
+#### `POST /api/users/session` - Sign in user
+
+**Body**
+
+- `username` _{string}_ - The user's username
+- `password` _{string}_ - The user's password
+
+**Returns**
+
+- A success message
+- An object with user's details (without password)
+
+**Throws**
+
+- `403` if the user is already logged in
+- `400` if username or password is not in correct format format or missing in the req
+- `401` if the user login credentials are invalid
+
+#### `DELETE /api/users/session` - Sign out user
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
 
 #### `GET /api/freets` - Get all the freets
 
@@ -209,18 +280,6 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` If the freet content is empty or a stream of empty spaces
 - `413` If the freet content is more than 140 characters long
 
-#### `DELETE /api/freets/:freetId?` - Delete an existing freet
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if the user is not logged in
-- `403` if the user is not the author of the freet
-- `404` if the freetId is invalid
-
 #### `PUT /api/freets/:freetId?` - Update an existing freet
 
 **Body**
@@ -240,71 +299,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if the new freet content is empty or a stream of empty spaces
 - `413` if the new freet content is more than 140 characters long
 
-#### `POST /api/users/session` - Sign in user
-
-**Body**
-
-- `username` _{string}_ - The user's username
-- `password` _{string}_ - The user's password
-
-**Returns**
-
-- A success message
-- An object with user's details (without password)
-
-**Throws**
-
-- `403` if the user is already logged in
-- `400` if username or password is not in correct format format or missing in the req
-- `401` if the user login credentials are invalid
-
-#### `DELETE /api/users/session` - Sign out user
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if user is not logged in
-
-#### `POST /api/users` - Create an new user account
-
-**Body**
-
-- `username` _{string}_ - The user's username
-- `password` _{string}_ - The user's password
-
-**Returns**
-
-- A success message
-- An object with the created user's details (without password)
-
-**Throws**
-
-- `403` if there is a user already logged in
-- `400` if username or password is in the wrong format
-- `409` if username is already in use
-
-#### `PUT /api/users` - Update a user's profile
-
-**Body** _(no need to add fields that are not being changed)_
-
-- `username` _{string}_ - The user's username
-- `password` _{string}_ - The user's password
-
-**Returns**
-
-- A success message
-- An object with the update user details (without password)
-
-**Throws**
-
-- `403` if the user is not logged in
-- `400` if username or password is in the wrong format
-- `409` if the username is already in use
-
-#### `DELETE /api/users` - Delete user
+#### `DELETE /api/freets/:freetId?` - Delete an existing freet
 
 **Returns**
 
@@ -313,211 +308,282 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+- `403` if the user is not the author of the freet
+- `404` if the freetId is invalid
 
-
-## Newly Added API routes
-
-#### `GET /api/freets/mostPopular` - Get the most liked freets
-
-**Returns**
-
-- An array of the most popular freets sorted in descending order by the number of likes
-
-#### `GET /api/freets/mostCredible` - Get the most credible freets
-
-**Returns**
-
-- An array of the most credible freets sorted in descending order by the number of approvals
-
-#### `GET /api/freets/following/user=USERNAME` - Get the user's following freets
-
-**Returns**
-
-- An array of the freets posted by the accounts that the user with username `user` is following
-
-**Throws**
-
-- `400` if `user` is not given
-- `404` if `user` is not a recognized username of any user
-
-#### `GET /api/freets/user=USERNAME/liked` - Get user's liked freets
-
-**Returns**
-
-- An array of freets liked by the user with username `user`
-
-**Throws**
-
-- `400` if `user` is not given
-- `404` if `user` is not a recognized username of any user
-
-#### `GET /api/freets/user=USERNAME/drafts` - Get user's draft freets
-
-**Returns**
-
-- An array of freets drafted by the user with username `user`
-
-**Throws**
-
-- `400` if `user` is not given
-- `404` if `user` is not a recognized username of any user
-
-#### `POST /api/freets/drafts` - Add a new draft to a user's list of drafts
+#### `POST /api/likes` - Like a freet
 
 **Body**
 
-- `freetId` *{string}* - the id of the freet to be added to drafts
+- `freetId` _{string}_ - The freet to be liked
 
 **Returns**
 
-- The newly updated drafts list
+- A success message
+- The newly created Like object
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist or it has already been added to drafts
 - `403` if the user is not logged in
+- `404` if freet does not exist or is already liked
 
-#### `DELETE /api/freets/drafts?freetID=FREETID` - Remove a draft from a user's list of drafts
+#### `DELETE /api/likes/:freetId?` - Remove a like from a freet
 
 **Returns**
 
-- A success message, along with the newly updated drafts list
+- A success message if the like is removed, else an error message
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist within the drafts list
 - `403` if the user is not logged in
+- `404` if freet does not exist or like does not exist on that freet
 
-#### `POST /api/approvals` - Add a new approval to a freet
+#### `GET /api/likes/:userId?` - Get all the freets liked by the user
+
+**Returns**
+
+- An array of freets liked by the user
+
+**Throws**
+
+- `403` if the user is not logged in or does not exist
+
+#### `POST api/approves/addApprove` - Approve a freet
 
 **Body**
 
-- `freetId` *{string}* - the id of the freet to approve
+- `freetId` _{string}_ - The freet to be approved
 
 **Returns**
 
-- The newly added approval
+- A success message
+- The newly created approve object
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist or it has already been approved by the user
 - `403` if the user is not logged in
+- `404` if freet does not exist or is already approved
 
-#### `DELETE /api/approvals/freetId=FREETID` - Remove an approval from a freet
+#### `DELETE api/approves/removeApprove/:freetId?` - Remove an approve from a freet
 
 **Returns**
 
-- A success message once the approval has been removed
+- A success message if the approve is removed, otherwise an error message
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist
 - `403` if the user is not logged in
+- `404` if freet does not exist or approve does not exist on that freet
 
-#### `POST /api/disprovals` - Add a new disproval to a freet
+#### `POST /api/link/addApproveLink/:freetId?/:url?` - Add an approve link to a freet
 
 **Body**
 
-- `freetId` *{string}* - the id of the freet to disprove
+- `userId` _{string}_ - The user that is adding the approve link
+- `freetId` _{string}_ - The freet that the approve link will be added to
+- `url` _{string}_ - The url of the approve link to be added
 
 **Returns**
 
-- The newly added disproval
+- A success message or an error message if unable to add link
+- The newly created approve link object
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist or it has already been disproved by the user
 - `403` if the user is not logged in
+- `404` if freet does not exist or the user has already added that specific link or that user has already added 3 unique links
 
-#### `DELETE /api/disprovals/freetId=FREETID` - Remove a disproval from a freet
-
-**Returns**
-
-- A success message once the disproval has been removed
-
-**Throws**
-
-- `404` if the freet with `freetId` does not exist
-- `403` if the user is not logged in
-
-#### `POST /api/approvals/links` - Add a new approval link to a freet
+#### `DELETE /api/link/removeApproveLink/:freetId?/:url?` - Remove an approve link from a freet
 
 **Body**
 
-- `freetId` *{string}* - the id of the freet to add the approval link to
+- `userId` _{string}_ - The user that originally added the approve link
+- `freetId` _{string}_ - The freet that the approve link will be removed from
+- `url` _{string}_ - The url of the approve link to be removed
 
 **Returns**
 
-- The newly added link
+- A success message or an error message if unable to remove link
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist or that user has already added that particular link
 - `403` if the user is not logged in
+- `404` if freet or link do not exist
 
-#### `POST /api/disprovals/links` - Add a new disproval link to a freet
+#### `GET /api/link/getMostPopularApproveLinks/:freetId?` - Get the most popular approve links on a freet
+
+**Returns**
+
+- An array of all the approve links sorted in descending order by number of occurrences on this freet
+
+#### `POST /api/disproves/addDisprove` - Disprove a freet
 
 **Body**
 
-- `freetId` *{string}* - the id of the freet to add the disproval link to
+- `freetId` _{string}_ - The freet to be disproved
 
 **Returns**
 
-- The newly added link
+- A success message
+- The newly created disprove object
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist or that user has already added that particular link
 - `403` if the user is not logged in
+- `404` if freet does not exist or is already disproved
 
-#### `POST /api/likes` - Add a new like
+#### `DELETE /api/disproves/removeDisprove/:freetId?` - Remove a disprove from a freet
+
+**Returns**
+
+- A success message if the disprove is removed, otherwise an error message
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if freet does not exist or disprove does not exist on that freet
+
+#### `POST /api/link/addDisproveLink/:freetId?/:url?` - Add a diprove link to a freet
 
 **Body**
 
-- `freetId` *{string}* - the id of the freet to like
+- `userId` _{string}_ - The user that is adding the disprove link
+- `freetId` _{string}_ - The freet that the disprove link will be added to
+- `url` _{string}_ - The url of the disprove link to be added
 
 **Returns**
 
-- The newly added like
+- A success message or an error message if unable to add link
+- The newly created disprove link object
 
 **Throws**
 
-- `404` if the freet with `freetId` does not exist or it has already been liked
 - `403` if the user is not logged in
+- `404` if freet does not exist or the user has already added that specific link or that user has already added 3 unique links
 
-#### `DELETE /api/likes/freetId=FREETID` - Remove a like from a freet
-
-**Returns**
-
-- A success message once the like has been removed
-
-**Throws**
-
-- `404` if the freet with `freetId` does not exist
-- `403` if the user is not logged in
-
-#### `POST /api/followers` - Follow another user
+#### `DELETE /api/link/removeDisproveLink/:freetId?/:url?` - Remove a disprove link from a freet
 
 **Body**
 
-- `followeeId` *{string}* - the id of the followee
+- `userId` _{string}_ - The user that originally added the disprove link
+- `freetId` _{string}_ - The freet that the disprove link will be removed from
+- `url` _{string}_ - The url of the disprove link to be removed
 
 **Returns**
 
-- The newly created follower entry
+- A success message or an error message if unable to remove link
 
 **Throws**
 
-- `404` if the user already follows that user
 - `403` if the user is not logged in
+- `404` if freet or link do not exist
 
-#### `DELETE /api/followers?followeeId=FOLLOWEEID` - Unfollow a user
+#### `GET /api/link/getMostPopularDisproveLinks/:freetId?` - Get the most popular disprove links on a freet
 
 **Returns**
 
-- A success message once the user has been unfollowed
+- An array of all the disprove links sorted in descending order by number of occurrences on this freet
+
+#### `POST /api/follow` - Follow another user
+
+**Body**
+
+- `follower` _{string}_ - The user that will follow
+- `folowee` _{string}_ - The user to be followed
+
+**Returns**
+
+- A success message or an error message if unable to follow the user
+- The newly created Follow object
 
 **Throws**
 
-- `404` if the user does not follow that user
+- `403` if the user is not logged in or the follow already exists
+
+#### `POST /api/follow/:followerId?/:followeeId?` - Unfollow a user
+
+**Returns**
+
+- A success message or an error message if unable to unfollow the user
+
+**Throws**
+
+- `403` if the user is not logged in or the follow doesn't exist
+
+#### `GET /api/follow/getFollowers/followeeId?` - Get all of the user's followers
+
+**Returns**
+
+- An array of all the users that follow the user with id = followeeId
+
+**Throws**
+
+- `404` if no user with the followee username exists
+
+#### `GET /api/follow/getFollowing/:followerId?` - Get all of the users that this user is following
+
+**Returns**
+
+- An array of all the users that this user is following
+
+**Throws**
+
+- `404` if no user with the user's username exists
+
+#### `GET /api/follow/feed/:userId?` - Get the feed that contains freets from users that this user is following
+
+**Returns**
+
+- An array of freets from users that this user follows
+
+**Throws**
+
 - `403` if the user is not logged in
+
+#### `GET /api/freets/mostPopular` - Get most liked freets sorted from most to least liked
+
+**Returns**
+
+- An array of all freets sorted in descending order by number of likes
+
+#### `GET /api/freets/mostCredible` - Get most approved freets sorted from most to least approved
+
+**Returns**
+
+- An array of all freets sorted in descending order by number of approves
+
+#### `PUT /api/limit/reset` - Reset a user's fritter limit (timer = 1hr and canPost=True) 
+
+**Returns**
+
+- A success message or an error message if unable to reset the limit
+- The newly updated user + limit object
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if unable to reset the timer or canPost
+
+#### `GET /api/limit/getLimit` - Get a user's fritter limit
+
+**Returns**
+
+- A success message or an error message if unable to get the limit
+- The current user + limit object
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if unable to find the Fritter Limit
+
+#### `PUT /api/limit/decrementLimit` - Decrement a user's fritter limit by 1 second
+
+**Returns**
+
+- A success message or an error message if unable to decrement the limit
+- The newly updated user + limit object
+
+**Throws**
+
+- `403` if the user is not logged in
+- `404` if unable to find the Fritter Limit or decrement the timer (reached limit)
